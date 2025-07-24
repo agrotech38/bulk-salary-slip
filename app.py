@@ -82,7 +82,16 @@ if uploaded_file:
 
         docx_path = generate_docx(data)
         generated_files.append(docx_path)
-        st.success(f"✅ Generated: {os.path.basename(docx_path)}")
+
+        # --- Individual Download Button ---
+        with open(docx_path, "rb") as f:
+            st.download_button(
+                label=f"📄 Download {os.path.basename(docx_path)}",
+                data=f,
+                file_name=os.path.basename(docx_path),
+                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                key=f"download_{index}"
+            )
 
     # --- Zip Download Option ---
     zip_path = "generated_salary_slips.zip"
